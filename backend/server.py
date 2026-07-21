@@ -114,7 +114,7 @@ CERTIFICATIONS
 - Data Visualisation: Empowering Business with Effective Insights — Tata · Forage (Feb 2025)
 - The Joy of Computing using Python — NPTEL Elite, IIT (Oct 2025, 12 Weeks)
 - Quantum Fundamentals (2025 – 2026) — WISER · Qubitech (Feb 2026)
-- Celonis Business Analyst
+- Business Analyst Virtual Internship — EduSkills · AICTE · Celonis (Mar 2025, ID c315ecc7721033a163cc80d52c9ebc22)
 - Ethical Hacking – EduSkills
 
 ACHIEVEMENTS

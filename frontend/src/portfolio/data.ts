@@ -254,11 +254,13 @@ export const CERTIFICATIONS: Certification[] = [
     credentialId: "2D665BB0",
   },
   {
-    name: "Celonis Business Analyst",
-    provider: "Celonis",
+    name: "Business Analyst Virtual Internship",
+    provider: "EduSkills · AICTE · Celonis",
     brandColor: "#6C4CFF",
-    brandTag: "CL",
+    brandTag: "BA",
     icon: "analytics",
+    issueDate: "Mar 2025",
+    credentialId: "c315ecc7721033a163cc80d52c9ebc22",
   },
   {
     name: "Ethical Hacking",
