@@ -1,0 +1,37 @@
+{
+  "summary": "Verified HeroPortrait animation-driver crash fix on Expo web preview. Loaded app, scrolled, and interacted with hero + chatbot: NO 'JS driven animation on animated node that has been moved to native earlier' error observed in the console or as a redbox. HeroPortrait renders correctly (gradient ring + portrait image + subtle float). Typing role animation cycles, blinking cursor visible, floating tech icons drift, scroll-progress bar animates, Back-to-Top FAB fades in after scroll, and Chatbot FAB is present. Backend /api/chat returns a grounded reply, and the chatbot suggestion chip produces a coherent LLM answer without any console errors. Only benign Expo Web warnings observed: (a) useNativeDriver fallback to JS (native driver not supported on RN Web — expected), (b) 'shadow* style props deprecated, use boxShadow', (c) 'props.pointerEvents deprecated, use style.pointerEvents'. These are pre-existing RN Web deprecations, not the reported bug.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": [
+      {"component": "shadow* style props", "issue": "React Native Web logs deprecation warning: '\"shadow*\" style props are deprecated. Use \"boxShadow\".' Many components use shadowColor/shadowRadius/shadowOpacity/shadowOffset (styles.portraitOuter, styles.primaryBtn, styles.iconBtn, styles.chip, styles.eduIcon, styles.certIcon, styles.achievementIcon, styles.contactIcon, styles.fabInner, styles.timelineDot, styles.skillDot, styles.projectIndex, styles.recruiterCta, and inline shadows in header sound toggle & scroll-progress bar). Web only; native still works. Reference: /app/frontend/app/index.tsx (multiple)."},
+      {"component": "props.pointerEvents", "issue": "Deprecation warning: 'props.pointerEvents is deprecated. Use style.pointerEvents'. Occurs in Particles (<View pointerEvents=\"none\">) and FloatingIcons (<View pointerEvents=\"none\">) and BackToTop (<Animated.View pointerEvents=...>). Reference: /app/frontend/app/index.tsx:71, 169, 1084."}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_portfolio_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Optional cleanup (non-blocking): migrate shadow* styles to boxShadow (or wrap in Platform.select) to silence RN Web deprecation warnings.",
+    "Optional cleanup (non-blocking): move pointerEvents=\"none\" from props to style={{ pointerEvents: 'none' }} on Particles, FloatingIcons, and BackToTop containers."
+  ],
+  "critical_code_review_comments": [
+    "HeroPortrait fix is clean: outer Animated.View drives shadowRadius (useNativeDriver:false); nested inner Animated.View drives transform:[{translateY}] (useNativeDriver:true) — no shared node between JS and native drivers. Verified in code at /app/frontend/app/index.tsx:455-482 and behaviourally at runtime.",
+    "server.py excludes MongoDB _id in GET /api/status via projection — good."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_portfolio_api.py (new)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preview URL: https://navya-recruit.preview.emergentagent.com. Backend at same host with /api prefix. Pytest suite at /app/backend/tests/test_portfolio_api.py covers root + /api/chat (grounded LLM). For UI, use mobile viewport 390x844 and testIDs: hero-portrait, hero-name, hero-recruiters-button, chatbot-open-button, chatbot-close-button, chatbot-suggestion-0..3, chatbot-message-*, chatbot-input, chatbot-send-button, back-to-top-button, scroll-progress-bar, theme-toggle-button, sound-toggle-button.",
+  "rca_of_issue": "Original crash: single Animated.View mixed a native-driven transform (translateY) with a JS-driven shadowRadius (Animated.Value interpolate on a non-transformable prop). Once the transform Animated.Value was 'moved to native', starting another JS-driven animation on the same node raised 'Attempting to run JS driven animation on animated node that has been moved to native earlier'. Fix (verified): split into two nested Animated.Views — outer handles shadowRadius with useNativeDriver:false; inner handles transform with useNativeDriver:true. Confirmed at runtime: no such error appears in Expo web console during load, scroll, or interaction."
+}

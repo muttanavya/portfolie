@@ -451,6 +451,7 @@ const HeroPortrait = () => {
   const shadowRadius = glow.interpolate({ inputRange: [0, 1], outputRange: [18, 32] });
 
   return (
+    // Outer view drives the JS-only shadow animation (shadowRadius)
     <Animated.View
       testID="hero-portrait"
       style={[
@@ -458,24 +459,26 @@ const HeroPortrait = () => {
         {
           shadowColor: colors.primary,
           shadowRadius: shadowRadius as any,
-          transform: [{ translateY }],
         },
       ]}
     >
-      <LinearGradient
-        colors={[colors.primary, colors.secondary, colors.tertiary]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.portraitRing}
-      >
-        <View style={[styles.portraitInner, { backgroundColor: colors.background }]}>
-          <Image
-            source={{ uri: PORTRAIT_URL }}
-            style={styles.portraitImage}
-            resizeMode="cover"
-          />
-        </View>
-      </LinearGradient>
+      {/* Inner view drives the native-only transform (translateY) */}
+      <Animated.View style={{ transform: [{ translateY }] }}>
+        <LinearGradient
+          colors={[colors.primary, colors.secondary, colors.tertiary]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.portraitRing}
+        >
+          <View style={[styles.portraitInner, { backgroundColor: colors.background }]}>
+            <Image
+              source={{ uri: PORTRAIT_URL }}
+              style={styles.portraitImage}
+              resizeMode="cover"
+            />
+          </View>
+        </LinearGradient>
+      </Animated.View>
     </Animated.View>
   );
 };
