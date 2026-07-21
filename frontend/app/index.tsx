@@ -43,6 +43,9 @@ import {
   lightTheme,
   useTheme,
 } from "@/src/portfolio/theme";
+import { ChatbotFAB } from "@/src/portfolio/components/Chatbot";
+import { RecruiterModal } from "@/src/portfolio/components/RecruiterModal";
+import { playSound, setSoundEnabled } from "@/src/portfolio/sound";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const HEADER_HEIGHT = 60;
@@ -550,12 +553,16 @@ const StickyHeader = ({
   viewportHeight,
   onSectionPress,
   onToggleTheme,
+  soundOn,
+  onToggleSound,
 }: {
   scrollY: Animated.Value;
   contentHeight: number;
   viewportHeight: number;
   onSectionPress: (id: string) => void;
   onToggleTheme: () => void;
+  soundOn: boolean;
+  onToggleSound: () => void;
 }) => {
   const { colors, mode } = useTheme();
   const insets = useSafeAreaInsets();
@@ -635,6 +642,29 @@ const StickyHeader = ({
               color={colors.textMain}
             />
           </TouchableOpacity>
+          <TouchableOpacity
+            testID="sound-toggle-button"
+            onPress={onToggleSound}
+            activeOpacity={0.7}
+            style={[
+              styles.themeToggle,
+              {
+                marginLeft: 6,
+                borderColor: soundOn ? colors.secondary : colors.borderStrong,
+                backgroundColor: colors.surface,
+                shadowColor: colors.glowSecondary,
+                shadowOffset: { width: 0, height: 0 },
+                shadowOpacity: soundOn ? 0.9 : 0,
+                shadowRadius: soundOn ? 8 : 0,
+              },
+            ]}
+          >
+            <Ionicons
+              name={soundOn ? "volume-high" : "volume-mute"}
+              size={18}
+              color={soundOn ? colors.secondary : colors.textMain}
+            />
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -659,14 +689,35 @@ const StickyHeader = ({
 // ---------------------------------------------------------------------------
 // Sections
 // ---------------------------------------------------------------------------
-const HeroSection = ({ onSectionPress }: { onSectionPress: (id: string) => void }) => {
+const HeroSection = ({
+  onSectionPress,
+  onOpenRecruiter,
+}: {
+  onSectionPress: (id: string) => void;
+  onOpenRecruiter: () => void;
+}) => {
   const { colors } = useTheme();
 
-  const openResume = () => WebBrowser.openBrowserAsync(RESUME_URL);
-  const downloadResume = () => Linking.openURL(RESUME_URL);
-  const openMail = () => Linking.openURL(`mailto:${CONTACT.email}`);
-  const openGithub = () => Linking.openURL(CONTACT.github);
-  const openLinkedin = () => Linking.openURL(CONTACT.linkedin);
+  const openResume = () => {
+    playSound("click");
+    WebBrowser.openBrowserAsync(RESUME_URL);
+  };
+  const downloadResume = () => {
+    playSound("click");
+    Linking.openURL(RESUME_URL);
+  };
+  const openMail = () => {
+    playSound("click");
+    Linking.openURL(`mailto:${CONTACT.email}`);
+  };
+  const openGithub = () => {
+    playSound("click");
+    Linking.openURL(CONTACT.github);
+  };
+  const openLinkedin = () => {
+    playSound("click");
+    Linking.openURL(CONTACT.linkedin);
+  };
 
   return (
     <View style={styles.hero}>
@@ -694,6 +745,30 @@ const HeroSection = ({ onSectionPress }: { onSectionPress: (id: string) => void 
         </View>
 
         <View style={styles.heroCtaCol}>
+          {/* For Recruiters badge button */}
+          <TouchableOpacity
+            testID="hero-recruiters-button"
+            activeOpacity={0.85}
+            onPress={() => {
+              playSound("open");
+              onOpenRecruiter();
+            }}
+            style={[
+              styles.recruiterCta,
+              {
+                borderColor: colors.borderStrong,
+                backgroundColor: colors.surface,
+                shadowColor: colors.glowSecondary,
+              },
+            ]}
+          >
+            <View style={[styles.recruiterDot, { backgroundColor: "#2EE59D" }]} />
+            <Text style={[styles.recruiterCtaText, { color: colors.textMain }]}>
+              For Recruiters — 30-second snapshot
+            </Text>
+            <Ionicons name="arrow-forward" size={14} color={colors.secondary} />
+          </TouchableOpacity>
+
           <View style={styles.heroCtaRow}>
             <PrimaryButton
               label="View Resume"
@@ -1044,6 +1119,8 @@ const Portfolio = () => {
   const [scrollValue, setScrollValue] = useState(0);
   const [contentHeight, setContentHeight] = useState(1);
   const [viewportHeight, setViewportHeight] = useState(1);
+  const [soundOn, setSoundOn] = useState(false);
+  const [recruiterOpen, setRecruiterOpen] = useState(false);
   const insets = useSafeAreaInsets();
 
   const sectionOffsets = useRef<Record<string, number>>({}).current;
@@ -1055,6 +1132,7 @@ const Portfolio = () => {
   };
 
   const scrollToSection = (id: string) => {
+    playSound("whoosh");
     if (id === "hero") {
       scrollRef.current?.scrollTo({ y: 0, animated: true });
       return;
@@ -1072,6 +1150,13 @@ const Portfolio = () => {
     sectionOffsets[id] = e.nativeEvent.layout.y;
   };
 
+  const toggleSound = () => {
+    const next = !soundOn;
+    setSoundEnabled(next);
+    setSoundOn(next);
+    if (next) playSound("success");
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.background }}>
       <LinearGradient colors={colors.gradientBg} style={StyleSheet.absoluteFill} />
@@ -1085,7 +1170,10 @@ const Portfolio = () => {
         contentContainerStyle={{ paddingBottom: 60 }}
       >
         <View onLayout={registerSection("hero")}>
-          <HeroSection onSectionPress={scrollToSection} />
+          <HeroSection
+            onSectionPress={scrollToSection}
+            onOpenRecruiter={() => setRecruiterOpen(true)}
+          />
         </View>
         <View onLayout={registerSection("about")}>
           <AboutSection />
@@ -1119,8 +1207,12 @@ const Portfolio = () => {
         viewportHeight={viewportHeight}
         onSectionPress={scrollToSection}
         onToggleTheme={useTheme().toggle}
+        soundOn={soundOn}
+        onToggleSound={toggleSound}
       />
       <BackToTop visible={scrollValue > 400} onPress={() => scrollToSection("hero")} />
+      <ChatbotFAB />
+      <RecruiterModal visible={recruiterOpen} onClose={() => setRecruiterOpen(false)} />
     </View>
   );
 };
@@ -1224,6 +1316,26 @@ const styles = StyleSheet.create({
   typingText: { fontSize: 18, fontWeight: "700", letterSpacing: 0.4 },
   heroCtaCol: { marginTop: 28, alignItems: "center", width: "100%" },
   heroCtaRow: { flexDirection: "row", justifyContent: "center", gap: 12, marginTop: 10, flexWrap: "wrap" },
+  recruiterCta: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    borderWidth: 1,
+    borderRadius: 999,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginBottom: 6,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  recruiterDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  recruiterCtaText: { fontSize: 12, fontWeight: "700", letterSpacing: 0.3 },
   socialRow: { flexDirection: "row", marginTop: 20, gap: 12 },
 
   // Portrait
