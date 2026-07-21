@@ -987,93 +987,157 @@ const InternshipsSection = () => {
   );
 };
 
-const CertificationsSection = () => {
+const CertCard = ({ c, index }: { c: any; index: number }) => {
   const { colors } = useTheme();
+
+  const openImage = () => {
+    if (!c.imageUrl) return;
+    playSound("open");
+    WebBrowser.openBrowserAsync(c.imageUrl);
+  };
+  const openVerify = () => {
+    if (!c.verifyUrl) return;
+    playSound("click");
+    Linking.openURL(c.verifyUrl);
+  };
+
+  return (
+    <GlassCard style={styles.certCard} testID={`cert-card-${index}`}>
+      {/* Brand header — logo tile + gradient wash of brand color */}
+      <View style={styles.certHeader}>
+        <LinearGradient
+          colors={[c.brandColor + "55", "transparent"]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={StyleSheet.absoluteFill}
+        />
+        {c.imageUrl ? (
+          <Image
+            source={{ uri: c.imageUrl }}
+            style={styles.certHeaderImage}
+            resizeMode="cover"
+            testID={`cert-image-${index}`}
+          />
+        ) : (
+          <View
+            style={[
+              styles.certLogoTile,
+              { backgroundColor: c.brandColor, shadowColor: c.brandColor },
+            ]}
+            testID={`cert-logo-${index}`}
+          >
+            <Ionicons name={c.icon as any} size={22} color="#fff" />
+            <Text style={styles.certLogoTag}>{c.brandTag}</Text>
+          </View>
+        )}
+      </View>
+
+      {/* Provider (issuer) small caps */}
+      <Text
+        style={[styles.certIssuer, { color: colors.textMuted }]}
+        numberOfLines={1}
+        testID={`cert-provider-${index}`}
+      >
+        {c.provider}
+      </Text>
+
+      {/* Title */}
+      <Text
+        style={[styles.certName, { color: colors.textMain }]}
+        numberOfLines={2}
+        testID={`cert-name-${index}`}
+      >
+        {c.name}
+      </Text>
+
+      {/* Issue date pill */}
+      {c.issueDate ? (
+        <View style={styles.certDateRow}>
+          <View
+            style={[
+              styles.certDatePill,
+              { borderColor: colors.border, backgroundColor: colors.surface },
+            ]}
+            testID={`cert-date-${index}`}
+          >
+            <Ionicons name="calendar" size={11} color={colors.textMuted} />
+            <Text style={[styles.certDateText, { color: colors.textMuted }]}>
+              {c.issueDate}
+            </Text>
+          </View>
+        </View>
+      ) : null}
+
+      {/* Actions */}
+      <View style={styles.certActions}>
+        <TouchableOpacity
+          testID={`cert-view-${index}`}
+          activeOpacity={0.85}
+          disabled={!c.imageUrl}
+          onPress={openImage}
+          style={[
+            styles.certActionBtn,
+            {
+              borderColor: c.imageUrl ? c.brandColor : colors.border,
+              opacity: c.imageUrl ? 1 : 0.55,
+              backgroundColor: c.imageUrl ? c.brandColor + "18" : "transparent",
+            },
+          ]}
+        >
+          <Ionicons
+            name={c.imageUrl ? "eye" : "eye-off"}
+            size={12}
+            color={c.imageUrl ? c.brandColor : colors.textMuted}
+          />
+          <Text
+            style={[
+              styles.certActionText,
+              { color: c.imageUrl ? colors.textMain : colors.textMuted },
+            ]}
+          >
+            {c.imageUrl ? "View Certificate" : "Awaiting Upload"}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          testID={`cert-verify-${index}`}
+          activeOpacity={0.85}
+          disabled={!c.verifyUrl}
+          onPress={openVerify}
+          style={[
+            styles.certActionBtn,
+            {
+              borderColor: c.verifyUrl ? c.brandColor : colors.border,
+              opacity: c.verifyUrl ? 1 : 0.55,
+            },
+          ]}
+        >
+          <Ionicons
+            name={c.verifyUrl ? "shield-checkmark" : "lock-closed"}
+            size={12}
+            color={c.verifyUrl ? c.brandColor : colors.textMuted}
+          />
+          <Text
+            style={[
+              styles.certActionText,
+              { color: c.verifyUrl ? colors.textMain : colors.textMuted },
+            ]}
+          >
+            {c.verifyUrl ? "Verify Credential" : "Verify Soon"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </GlassCard>
+  );
+};
+
+const CertificationsSection = () => {
   return (
     <View style={styles.section} testID="certifications-section">
       <SectionTitle eyebrow="06 — Learning" title="Certifications" />
       <View style={styles.certGrid}>
         {CERTIFICATIONS.map((c, i) => (
-          <GlassCard key={c.name} style={styles.certCard} testID={`cert-card-${i}`}>
-            {/* Brand strip */}
-            <View style={styles.certBrandRow}>
-              <View
-                style={[
-                  styles.certBrandBadge,
-                  { backgroundColor: c.brandColor, shadowColor: c.brandColor },
-                ]}
-              >
-                <Ionicons name={c.icon as any} size={14} color="#fff" />
-                <Text style={styles.certBrandBadgeText}>{c.brandTag}</Text>
-              </View>
-              <Text style={[styles.certProvider, { color: colors.textMuted }]} numberOfLines={1}>
-                {c.provider}
-              </Text>
-            </View>
-
-            {/* Image slot — placeholder until user uploads real cert image */}
-            {c.imageUrl ? (
-              <View
-                style={[
-                  styles.certImageWrap,
-                  { borderColor: colors.border, backgroundColor: colors.surface },
-                ]}
-                testID={`cert-image-${i}`}
-              >
-                <Image source={{ uri: c.imageUrl }} style={styles.certImage} resizeMode="cover" />
-              </View>
-            ) : (
-              <View
-                style={[
-                  styles.certImagePlaceholder,
-                  {
-                    borderColor: colors.border,
-                    backgroundColor: colors.surface,
-                  },
-                ]}
-                testID={`cert-image-placeholder-${i}`}
-              >
-                <Ionicons name="ribbon" size={22} color={c.brandColor} />
-              </View>
-            )}
-
-            <Text style={[styles.certName, { color: colors.textMain }]} numberOfLines={3}>
-              {c.name}
-            </Text>
-
-            {/* Verify button */}
-            <TouchableOpacity
-              testID={`cert-verify-${i}`}
-              activeOpacity={0.85}
-              disabled={!c.verifyUrl}
-              onPress={() => {
-                if (!c.verifyUrl) return;
-                playSound("click");
-                Linking.openURL(c.verifyUrl);
-              }}
-              style={[
-                styles.certVerifyBtn,
-                {
-                  borderColor: c.verifyUrl ? c.brandColor : colors.border,
-                  opacity: c.verifyUrl ? 1 : 0.5,
-                },
-              ]}
-            >
-              <Ionicons
-                name={c.verifyUrl ? "shield-checkmark" : "lock-closed"}
-                size={12}
-                color={c.verifyUrl ? c.brandColor : colors.textMuted}
-              />
-              <Text
-                style={[
-                  styles.certVerifyText,
-                  { color: c.verifyUrl ? colors.textMain : colors.textMuted },
-                ]}
-              >
-                {c.verifyUrl ? "Verify Credential" : "Verify Soon"}
-              </Text>
-            </TouchableOpacity>
-          </GlassCard>
+          <CertCard key={c.name} c={c} index={i} />
         ))}
       </View>
     </View>
@@ -1642,54 +1706,72 @@ const styles = StyleSheet.create({
 
   // Certifications
   certGrid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 220 },
-  certBrandRow: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 10 },
-  certBrandBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 4,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 6,
-    elevation: 3,
-  },
-  certBrandBadgeText: { color: "#fff", fontSize: 10, fontWeight: "800", letterSpacing: 0.8 },
-  certProvider: { flex: 1, fontSize: 10, fontWeight: "700", letterSpacing: 0.6, textTransform: "uppercase" },
-  certImagePlaceholder: {
-    width: "100%",
-    height: 66,
-    borderWidth: 1,
-    borderRadius: 12,
-    borderStyle: "dashed",
+  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 280 },
+  certHeader: {
+    height: 88,
+    borderRadius: 14,
+    overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 12,
   },
-  certImageWrap: {
-    width: "100%",
-    height: 66,
+  certHeaderImage: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  certLogoTile: {
+    width: 56,
+    height: 56,
+    borderRadius: 14,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.75,
+    shadowRadius: 10,
+    elevation: 6,
+  },
+  certLogoTag: {
+    color: "#fff",
+    fontSize: 9,
+    fontWeight: "900",
+    letterSpacing: 1,
+    marginTop: 2,
+  },
+  certIssuer: {
+    fontSize: 10,
+    fontWeight: "800",
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
+    marginBottom: 4,
+  },
+  certName: {
+    fontSize: 13,
+    fontWeight: "700",
+    lineHeight: 18,
+    minHeight: 36,
+  },
+  certDateRow: { marginTop: 8, flexDirection: "row" },
+  certDatePill: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
     borderWidth: 1,
-    borderRadius: 12,
-    overflow: "hidden",
-    marginBottom: 10,
   },
-  certImage: { width: "100%", height: "100%" },
-  certName: { fontSize: 12, fontWeight: "700", lineHeight: 17, flex: 1 },
-  certVerifyBtn: {
-    marginTop: 10,
+  certDateText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.3 },
+  certActions: { marginTop: 12, gap: 6 },
+  certActionBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     gap: 6,
     borderWidth: 1,
-    borderRadius: 16,
-    paddingVertical: 7,
+    borderRadius: 14,
+    paddingVertical: 8,
     paddingHorizontal: 10,
   },
-  certVerifyText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.4 },
+  certActionText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.3 },
 
   // Achievements
   achievementRow: { flexDirection: "row", alignItems: "flex-start", paddingVertical: 14 },

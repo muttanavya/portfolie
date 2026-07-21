@@ -187,6 +187,7 @@ export type Certification = {
   brandColor: string; // background accent
   brandTag: string; // short 1-3 char text badge (fallback for logo)
   icon: string; // Ionicons name
+  issueDate?: string; // e.g. "Mar 2025" — shown as pill if present
   verifyUrl?: string; // public credential URL, if any
   imageUrl?: string; // uploaded cert image/pdf preview, if any
 };
@@ -214,11 +215,18 @@ export const CERTIFICATIONS: Certification[] = [
     icon: "logo-google",
   },
   {
+    name: "Generative AI Fundamentals",
+    provider: "Google Cloud",
+    brandColor: "#EA4335",
+    brandTag: "GEN",
+    icon: "sparkles",
+  },
+  {
     name: "Quantum Computing Fundamentals",
     provider: "Quantum Program",
     brandColor: "#9B5DE5",
     brandTag: "QC",
-    icon: "sparkles",
+    icon: "flash",
   },
   {
     name: "Celonis Business Analyst",
@@ -239,7 +247,7 @@ export const CERTIFICATIONS: Certification[] = [
     provider: "Deloitte · Forage",
     brandColor: "#86BC25",
     brandTag: "DL",
-    icon: "analytics",
+    icon: "briefcase",
   },
   {
     name: "Ethical Hacking",

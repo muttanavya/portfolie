@@ -110,6 +110,7 @@ CERTIFICATIONS
 - Microsoft Azure AI Fundamentals
 - AWS Data Engineering
 - Google Python Full Stack Developer
+- Generative AI Fundamentals (Google Cloud)
 - Quantum Computing Fundamentals
 - Celonis Business Analyst
 - Data Visualization (Forage)
