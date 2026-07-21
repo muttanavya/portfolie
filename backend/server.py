@@ -107,16 +107,15 @@ INTERNSHIPS
 - Data Structures & Algorithms Internship (8 weeks)
 
 CERTIFICATIONS
-- Microsoft Azure AI Fundamentals
 - AWS Data Engineering
 - Google Python Full Stack Developer
 - Generative AI Fundamentals (Google Cloud)
-- Quantum Computing Fundamentals
+- Data Analytics Job Simulation — Deloitte · Forage (Nov 2025)
+- Data Visualisation: Empowering Business with Effective Insights — Tata · Forage (Feb 2025)
+- The Joy of Computing using Python — NPTEL Elite, IIT (Oct 2025, 12 Weeks)
+- Quantum Fundamentals (2025 – 2026) — WISER · Qubitech (Feb 2026)
 - Celonis Business Analyst
-- Data Visualization (Forage)
-- Deloitte Data Analytics Job Simulation (Forage)
 - Ethical Hacking – EduSkills
-- NPTEL Elite – Joy of Computing Using Python
 
 ACHIEVEMENTS
 - Selected for the CRT Elite Batch at Dadi Institute of Engineering & Technology.

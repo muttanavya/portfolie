@@ -187,19 +187,14 @@ export type Certification = {
   brandColor: string; // background accent
   brandTag: string; // short 1-3 char text badge (fallback for logo)
   icon: string; // Ionicons name
-  issueDate?: string; // e.g. "Mar 2025" — shown as pill if present
+  issueDate?: string; // e.g. "Feb 2026"
+  duration?: string; // e.g. "12 Weeks"
+  credentialId?: string; // certificate id / verification code
   verifyUrl?: string; // public credential URL, if any
   imageUrl?: string; // uploaded cert image/pdf preview, if any
 };
 
 export const CERTIFICATIONS: Certification[] = [
-  {
-    name: "Microsoft Azure AI Fundamentals",
-    provider: "Microsoft",
-    brandColor: "#0078D4",
-    brandTag: "MS",
-    icon: "cloud",
-  },
   {
     name: "AWS Data Engineering",
     provider: "Amazon Web Services",
@@ -222,11 +217,41 @@ export const CERTIFICATIONS: Certification[] = [
     icon: "sparkles",
   },
   {
-    name: "Quantum Computing Fundamentals",
-    provider: "Quantum Program",
+    name: "Data Analytics Job Simulation",
+    provider: "Deloitte · Forage",
+    brandColor: "#86BC25",
+    brandTag: "DL",
+    icon: "briefcase",
+    issueDate: "Nov 2025",
+    credentialId: "u7SLihrTCo8RWjExu",
+  },
+  {
+    name: "Data Visualisation: Empowering Business with Effective Insights",
+    provider: "Tata · Forage",
+    brandColor: "#486AFF",
+    brandTag: "TATA",
+    icon: "bar-chart",
+    issueDate: "Feb 2025",
+    credentialId: "XTgEBtFyqWsdqgJvM",
+  },
+  {
+    name: "The Joy of Computing using Python — NPTEL Elite",
+    provider: "NPTEL (IIT)",
+    brandColor: "#0EA5E9",
+    brandTag: "NPT",
+    icon: "trophy",
+    issueDate: "Oct 2025",
+    duration: "12 Weeks",
+    credentialId: "NPTEL25CS103S972401856",
+  },
+  {
+    name: "Quantum Fundamentals (2025 – 2026)",
+    provider: "WISER · Qubitech",
     brandColor: "#9B5DE5",
     brandTag: "QC",
     icon: "flash",
+    issueDate: "Feb 2026",
+    credentialId: "2D665BB0",
   },
   {
     name: "Celonis Business Analyst",
@@ -236,32 +261,11 @@ export const CERTIFICATIONS: Certification[] = [
     icon: "analytics",
   },
   {
-    name: "Data Visualization",
-    provider: "Forage",
-    brandColor: "#22C55E",
-    brandTag: "FG",
-    icon: "bar-chart",
-  },
-  {
-    name: "Deloitte Data Analytics Job Simulation",
-    provider: "Deloitte · Forage",
-    brandColor: "#86BC25",
-    brandTag: "DL",
-    icon: "briefcase",
-  },
-  {
     name: "Ethical Hacking",
     provider: "EduSkills",
     brandColor: "#EF4444",
     brandTag: "ES",
     icon: "shield-checkmark",
-  },
-  {
-    name: "Joy of Computing Using Python — NPTEL Elite",
-    provider: "NPTEL",
-    brandColor: "#0EA5E9",
-    brandTag: "NPT",
-    icon: "trophy",
   },
 ];
 

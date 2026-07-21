@@ -1050,21 +1050,57 @@ const CertCard = ({ c, index }: { c: any; index: number }) => {
         {c.name}
       </Text>
 
-      {/* Issue date pill */}
-      {c.issueDate ? (
+      {/* Issue date + duration pills */}
+      {c.issueDate || c.duration ? (
         <View style={styles.certDateRow}>
-          <View
-            style={[
-              styles.certDatePill,
-              { borderColor: colors.border, backgroundColor: colors.surface },
-            ]}
-            testID={`cert-date-${index}`}
+          {c.issueDate ? (
+            <View
+              style={[
+                styles.certDatePill,
+                { borderColor: colors.border, backgroundColor: colors.surface },
+              ]}
+              testID={`cert-date-${index}`}
+            >
+              <Ionicons name="calendar" size={11} color={colors.textMuted} />
+              <Text style={[styles.certDateText, { color: colors.textMuted }]}>
+                {c.issueDate}
+              </Text>
+            </View>
+          ) : null}
+          {c.duration ? (
+            <View
+              style={[
+                styles.certDatePill,
+                { borderColor: colors.border, backgroundColor: colors.surface },
+              ]}
+              testID={`cert-duration-${index}`}
+            >
+              <Ionicons name="time" size={11} color={colors.textMuted} />
+              <Text style={[styles.certDateText, { color: colors.textMuted }]}>
+                {c.duration}
+              </Text>
+            </View>
+          ) : null}
+        </View>
+      ) : null}
+
+      {/* Credential ID */}
+      {c.credentialId ? (
+        <View
+          style={[
+            styles.certIdRow,
+            { borderColor: colors.border, backgroundColor: colors.surface },
+          ]}
+          testID={`cert-credential-${index}`}
+        >
+          <Ionicons name="finger-print" size={11} color={c.brandColor} />
+          <Text
+            style={[styles.certIdText, { color: colors.textMain }]}
+            numberOfLines={1}
+            ellipsizeMode="middle"
           >
-            <Ionicons name="calendar" size={11} color={colors.textMuted} />
-            <Text style={[styles.certDateText, { color: colors.textMuted }]}>
-              {c.issueDate}
-            </Text>
-          </View>
+            {c.credentialId}
+          </Text>
         </View>
       ) : null}
 
@@ -1706,7 +1742,7 @@ const styles = StyleSheet.create({
 
   // Certifications
   certGrid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 280 },
+  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 320 },
   certHeader: {
     height: 88,
     borderRadius: 14,
@@ -1749,7 +1785,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     minHeight: 36,
   },
-  certDateRow: { marginTop: 8, flexDirection: "row" },
+  certDateRow: { marginTop: 8, flexDirection: "row", flexWrap: "wrap", gap: 6 },
   certDatePill: {
     flexDirection: "row",
     alignItems: "center",
@@ -1760,6 +1796,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   certDateText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.3 },
+  certIdRow: {
+    marginTop: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  certIdText: { flex: 1, fontSize: 10, fontWeight: "600", letterSpacing: 0.4 },
   certActions: { marginTop: 12, gap: 6 },
   certActionBtn: {
     flexDirection: "row",
