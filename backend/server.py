@@ -113,6 +113,7 @@ CERTIFICATIONS
 - Quantum Computing Fundamentals
 - Celonis Business Analyst
 - Data Visualization (Forage)
+- Deloitte Data Analytics Job Simulation (Forage)
 - Ethical Hacking – EduSkills
 - NPTEL Elite – Joy of Computing Using Python
 

@@ -235,6 +235,13 @@ export const CERTIFICATIONS: Certification[] = [
     icon: "bar-chart",
   },
   {
+    name: "Deloitte Data Analytics Job Simulation",
+    provider: "Deloitte · Forage",
+    brandColor: "#86BC25",
+    brandTag: "DL",
+    icon: "analytics",
+  },
+  {
     name: "Ethical Hacking",
     provider: "EduSkills",
     brandColor: "#EF4444",
