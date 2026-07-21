@@ -1,0 +1,225 @@
+{
+  "app_context": {
+    "name": "Mutta Navya Portfolio App",
+    "type": "React Native / Expo Mobile App",
+    "theme_modes": "Dark and Light with toggle",
+    "core_aesthetic": "Futuristic, Premium, Glassmorphism, Neon Glow"
+  },
+  "colors": {
+    "dark": {
+      "background": "#05050A",
+      "surface": "rgba(18, 16, 28, 0.65)",
+      "surface_border": "rgba(112, 0, 255, 0.4)",
+      "primary": "#8A2BE2",
+      "secondary": "#00E5FF",
+      "tertiary": "#FF007F",
+      "text_main": "#FFFFFF",
+      "text_muted": "#A09EAB",
+      "glow_primary": "rgba(138, 43, 226, 0.8)",
+      "glow_secondary": "rgba(0, 229, 255, 0.8)",
+      "nav_background": "rgba(5, 5, 10, 0.85)",
+      "card_gradient": ["rgba(20, 15, 35, 0.8)", "rgba(10, 10, 20, 0.9)"]
+    },
+    "light": {
+      "background": "#F4F6F9",
+      "surface": "rgba(255, 255, 255, 0.7)",
+      "surface_border": "rgba(138, 43, 226, 0.2)",
+      "primary": "#6200EA",
+      "secondary": "#00B8D4",
+      "tertiary": "#D500F9",
+      "text_main": "#0F0A1A",
+      "text_muted": "#5C5A6B",
+      "glow_primary": "rgba(98, 0, 234, 0.4)",
+      "glow_secondary": "rgba(0, 184, 212, 0.4)",
+      "nav_background": "rgba(244, 246, 249, 0.85)",
+      "card_gradient": ["rgba(255, 255, 255, 0.9)", "rgba(245, 247, 250, 0.9)"]
+    }
+  },
+  "typography": {
+    "primary_font": "SpaceGrotesk",
+    "secondary_font": "Inter",
+    "scales": {
+      "h1": { "fontSize": 42, "fontWeight": "800", "letterSpacing": -1.2 },
+      "h2": { "fontSize": 34, "fontWeight": "700", "letterSpacing": -0.8 },
+      "h3": { "fontSize": 26, "fontWeight": "600", "letterSpacing": -0.4 },
+      "h4": { "fontSize": 20, "fontWeight": "600", "letterSpacing": 0 },
+      "body_lg": { "fontSize": 18, "fontWeight": "400", "letterSpacing": 0.2 },
+      "body_md": { "fontSize": 16, "fontWeight": "400", "letterSpacing": 0.2 },
+      "body_sm": { "fontSize": 14, "fontWeight": "400", "letterSpacing": 0.2 },
+      "caption": { "fontSize": 12, "fontWeight": "700", "textTransform": "uppercase", "letterSpacing": 1.5 }
+    }
+  },
+  "spacing": {
+    "xs": 4,
+    "sm": 8,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "xxl": 48,
+    "section_padding": 24,
+    "section_gap": 64
+  },
+  "components": {
+    "glass_card": {
+      "description": "Premium glassmorphic surfaces.",
+      "styles": {
+        "borderRadius": 24,
+        "borderWidth": 1,
+        "overflow": "hidden",
+        "padding": 24
+      }
+    },
+    "neon_glow": {
+      "description": "Ethereal outer glow effects for tech accents.",
+      "styles": {
+        "shadowOffset": { "width": 0, "height": 0 },
+        "shadowOpacity": 0.8,
+        "shadowRadius": 15,
+        "elevation": 10
+      }
+    },
+    "tech_chip": {
+      "description": "Pill-shaped containers for skills/tech.",
+      "styles": {
+        "paddingVertical": 8,
+        "paddingHorizontal": 16,
+        "borderRadius": 100,
+        "borderWidth": 1
+      }
+    },
+    "primary_button": {
+      "description": "Main CTA with gradient and glow.",
+      "styles": {
+        "height": 56,
+        "borderRadius": 28,
+        "justifyContent": "center",
+        "alignItems": "center",
+        "paddingHorizontal": 32
+      }
+    },
+    "timeline_node": {
+      "description": "Glowing dot on a vertical line.",
+      "styles": {
+        "width": 16,
+        "height": 16,
+        "borderRadius": 8,
+        "borderWidth": 2
+      }
+    }
+  },
+  "layout_specs": {
+    "navigation": {
+      "type": "Sticky Top Header",
+      "behavior": "Blur background, horizontal scroll for section links, dark/light toggle icon on right.",
+      "progress_bar": "Absolute positioned at bottom of header, height 3px, width driven by scroll offset."
+    },
+    "hero_section": {
+      "layout": "Centered content with asymmetrical background elements.",
+      "elements": [
+        "Animated Particle Background (Floating points).",
+        "Portrait Image: Inside a circular frame with border-radius: 9999, border-width: 2, neon glow, and slow floating animation (translateY).",
+        "Role Text: Typing animation iterating through ['B.Tech CSE Student', 'Machine Learning Enthusiast', 'Software Developer'].",
+        "CTAs: 'View Resume' (Primary, Glow), 'Download Resume' (Secondary, Outline).",
+        "Social Row: Contact (mailto), GitHub, LinkedIn Icon buttons."
+      ]
+    },
+    "about_section": {
+      "layout": "Left-aligned text with emphasized keywords.",
+      "elements": [
+        "Glass Card containing bio text.",
+        "Highlight keywords like 'B.Tech CSE & ML', 'Autonomous' with primary color."
+      ]
+    },
+    "education_section": {
+      "layout": "Glass Card with clear hierarchy.",
+      "elements": [
+        "Dadi Institute of Engineering & Technology, B.Tech CSE & ML, CGPA, Duration, Location."
+      ]
+    },
+    "skills_section": {
+      "layout": "Categorized groups.",
+      "categories": ["Programming", "Cloud", "Tools", "Technologies"],
+      "elements": [
+        "Each group has an H4 title.",
+        "Flex wrap row of Tech Chips with glowing borders."
+      ]
+    },
+    "projects_section": {
+      "layout": "Vertical list of cards or Horizontal Carousel.",
+      "items": [
+        "Credit Card Fraud Detection",
+        "Browser History Simulator",
+        "Vehicle Accident Alert System",
+        "Smart Door Lock System"
+      ],
+      "elements": [
+        "Glassmorphic Card with Title, Description, Tech Chips row, GitHub Link button."
+      ]
+    },
+    "internships_section": {
+      "layout": "Vertical Timeline layout.",
+      "elements": [
+        "Left vertical line with neon glow.",
+        "5 nodes with glowing dots connected to the line.",
+        "Card per internship positioned to the right of the line."
+      ]
+    },
+    "certifications_section": {
+      "layout": "Horizontal ScrollView with snap-to-interval or Grid.",
+      "elements": [
+        "8 items, rendered as glassmorphic animated cards."
+      ]
+    },
+    "achievements_section": {
+      "layout": "List layout.",
+      "elements": [
+        "Bullet points replaced with custom neon icons (e.g., Star/Trophy), separated by subtle dividers."
+      ]
+    },
+    "footer_section": {
+      "layout": "Centered",
+      "elements": [
+        "Email, Phone, GitHub, LinkedIn.",
+        "Floating Action Button (FAB) for 'Back to top' at bottom-right."
+      ]
+    }
+  },
+  "media": {
+    "portrait_url": "https://customer-assets-rejwkqb3.emergentagent.net/job_navya-recruit/artifacts/bid3j9g6_WhatsApp%20Image%202026-07-21%20at%207.51.20%20PM.jpeg",
+    "resume_url": "https://customer-assets-rejwkqb3.emergentagent.net/job_navya-recruit/artifacts/axrouqjo_r1%20%281%29.pdf",
+    "image_urls": []
+  },
+  "motion": {
+    "floating_icons": "Use Animated.loop with sequence of Animated.timing to translateY up and down smoothly.",
+    "typing_animation": "Use state to substring text over intervals (e.g., 100ms per character).",
+    "particles": "Randomly placed absolute views moving slowly with reanimated.",
+    "button_press": "Scale down to 0.95 on onPressIn, return to 1 on onPressOut."
+  },
+  "accessibility": {
+    "test_ids": "All buttons, inputs, links, and cards MUST have unique testID (e.g., testID='hero-view-resume-button').",
+    "touch_targets": "Minimum touch area of 48x48 via hitSlop or explicit dimensions.",
+    "contrast": "Ensure text over gradients has sufficient contrast (use textShadow for readability if needed)."
+  },
+  "instructions_to_main_agent": [
+    "Develop using React Native and Expo.",
+    "Use JS files (.js/.jsx) as requested. Do NOT use .tsx.",
+    "Create a ThemeContext to handle Dark/Light mode toggling smoothly.",
+    "Use standard React Native StyleSheet for styling.",
+    "Use expo-blur for Glassmorphism if possible, otherwise simulate with semi-transparent rgba and borders.",
+    "Implement the Hero section portrait exactly as requested: glowing circular frame with floating animation. Use the provided portrait URL.",
+    "Ensure 'Download Resume' links to the provided PDF URL.",
+    "Implement the vertical timeline for Internships manually using Views and borders.",
+    "Floating back-to-top button should use absolute positioning and react to ScrollView offset.",
+    "Include scroll progress bar mapped to ScrollView's contentOffset.y."
+  ],
+  "universal_guidelines": [
+    "You tend to converge toward generic outputs. Avoid this by using deep contrasting colors, distinct layered shadows, and glassmorphic overlays.",
+    "Do not use dark colors as gradients (except intentionally for mood). Combine with vibrant accents.",
+    "Avoid generic centered layouts. Use asymmetrical spacing where possible to create visual interest.",
+    "Never use pure transparent backgrounds for nav/headers where content scrolls underneath. Always add blur or a semi-solid tint.",
+    "Every interactive element needs micro-interactions (opacity change or scale on press).",
+    "Always use the provided exact portrait URL and resume URL.",
+    "No fake stats or invented content. Use exactly what is provided in the problem statement.",
+    "All interactive elements MUST include a testID attribute."
+  ]
+}
