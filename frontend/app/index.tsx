@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -880,44 +881,69 @@ const SkillsSection = () => {
 
 const ProjectsSection = () => {
   const { colors } = useTheme();
+  const router = useRouter();
+
+  const openProject = (slug: string) => {
+    playSound("open");
+    router.push(`/project/${slug}` as any);
+  };
+
   return (
     <View style={styles.section} testID="projects-section">
       <SectionTitle eyebrow="04 — Work" title="Projects" />
       {PROJECTS.map((p, i) => (
-        <GlassCard key={p.title} style={{ marginBottom: 16 }} testID={`project-card-${i}`}>
+        <GlassCard key={p.slug} style={{ marginBottom: 16 }} testID={`project-card-${p.slug}`}>
           <View style={styles.projectHeader}>
             <View
               style={[
                 styles.projectIndex,
-                { borderColor: colors.borderStrong, shadowColor: colors.glowPrimary },
+                { borderColor: p.accent, shadowColor: p.accent },
               ]}
             >
               <LinearGradient
-                colors={[colors.primary, colors.tertiary]}
+                colors={[p.accent, colors.primary]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={StyleSheet.absoluteFill}
               />
-              <Text style={styles.projectIndexText}>{String(i + 1).padStart(2, "0")}</Text>
+              <Ionicons name={p.icon as any} size={16} color="#fff" />
             </View>
-            <Text style={[styles.projectTitle, { color: colors.textMain }]}>{p.title}</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.projectTitle, { color: colors.textMain }]}>{p.title}</Text>
+              <Text style={[styles.projectTagline, { color: colors.textMuted }]} numberOfLines={2}>
+                {p.tagline}
+              </Text>
+            </View>
           </View>
-          <Text style={[styles.projectDesc, { color: colors.textMuted }]}>{p.description}</Text>
           <View style={styles.chipRow}>
-            {p.tech.map((t) => (
+            {p.tech.slice(0, 4).map((t) => (
               <Chip key={t} label={t} testID={`project-tech-${i}-${t}`} />
             ))}
+            {p.tech.length > 4 ? (
+              <View
+                style={[
+                  styles.chipMore,
+                  { borderColor: colors.border, backgroundColor: colors.surface },
+                ]}
+              >
+                <Text style={[styles.chipMoreText, { color: colors.textMuted }]}>
+                  +{p.tech.length - 4}
+                </Text>
+              </View>
+            ) : null}
           </View>
-          {p.github ? (
-            <View style={{ marginTop: 16, alignSelf: "flex-start" }}>
-              <GhostButton
-                label="GitHub"
-                icon="logo-github"
-                onPress={() => Linking.openURL(p.github!)}
-                testID={`project-github-${i}`}
-              />
-            </View>
-          ) : null}
+          <TouchableOpacity
+            testID={`project-view-${p.slug}`}
+            activeOpacity={0.85}
+            onPress={() => openProject(p.slug)}
+            style={[
+              styles.viewProjectBtn,
+              { borderColor: p.accent, shadowColor: p.accent },
+            ]}
+          >
+            <Text style={[styles.viewProjectText, { color: colors.textMain }]}>View Project</Text>
+            <Ionicons name="arrow-forward" size={14} color={p.accent} />
+          </TouchableOpacity>
         </GlassCard>
       ))}
     </View>
@@ -968,16 +994,85 @@ const CertificationsSection = () => {
       <SectionTitle eyebrow="06 — Learning" title="Certifications" />
       <View style={styles.certGrid}>
         {CERTIFICATIONS.map((c, i) => (
-          <GlassCard key={c} style={styles.certCard} testID={`cert-card-${i}`}>
-            <View
+          <GlassCard key={c.name} style={styles.certCard} testID={`cert-card-${i}`}>
+            {/* Brand strip */}
+            <View style={styles.certBrandRow}>
+              <View
+                style={[
+                  styles.certBrandBadge,
+                  { backgroundColor: c.brandColor, shadowColor: c.brandColor },
+                ]}
+              >
+                <Ionicons name={c.icon as any} size={14} color="#fff" />
+                <Text style={styles.certBrandBadgeText}>{c.brandTag}</Text>
+              </View>
+              <Text style={[styles.certProvider, { color: colors.textMuted }]} numberOfLines={1}>
+                {c.provider}
+              </Text>
+            </View>
+
+            {/* Image slot — placeholder until user uploads real cert image */}
+            {c.imageUrl ? (
+              <View
+                style={[
+                  styles.certImageWrap,
+                  { borderColor: colors.border, backgroundColor: colors.surface },
+                ]}
+                testID={`cert-image-${i}`}
+              >
+                <Image source={{ uri: c.imageUrl }} style={styles.certImage} resizeMode="cover" />
+              </View>
+            ) : (
+              <View
+                style={[
+                  styles.certImagePlaceholder,
+                  {
+                    borderColor: colors.border,
+                    backgroundColor: colors.surface,
+                  },
+                ]}
+                testID={`cert-image-placeholder-${i}`}
+              >
+                <Ionicons name="ribbon" size={22} color={c.brandColor} />
+              </View>
+            )}
+
+            <Text style={[styles.certName, { color: colors.textMain }]} numberOfLines={3}>
+              {c.name}
+            </Text>
+
+            {/* Verify button */}
+            <TouchableOpacity
+              testID={`cert-verify-${i}`}
+              activeOpacity={0.85}
+              disabled={!c.verifyUrl}
+              onPress={() => {
+                if (!c.verifyUrl) return;
+                playSound("click");
+                Linking.openURL(c.verifyUrl);
+              }}
               style={[
-                styles.certIcon,
-                { borderColor: colors.borderStrong, shadowColor: colors.glowSecondary },
+                styles.certVerifyBtn,
+                {
+                  borderColor: c.verifyUrl ? c.brandColor : colors.border,
+                  opacity: c.verifyUrl ? 1 : 0.5,
+                },
               ]}
             >
-              <Ionicons name="ribbon" size={22} color={colors.secondary} />
-            </View>
-            <Text style={[styles.certText, { color: colors.textMain }]}>{c}</Text>
+              <Ionicons
+                name={c.verifyUrl ? "shield-checkmark" : "lock-closed"}
+                size={12}
+                color={c.verifyUrl ? c.brandColor : colors.textMuted}
+              />
+              <Text
+                style={[
+                  styles.certVerifyText,
+                  { color: c.verifyUrl ? colors.textMain : colors.textMuted },
+                ]}
+              >
+                {c.verifyUrl ? "Verify Credential" : "Verify Soon"}
+              </Text>
+            </TouchableOpacity>
           </GlassCard>
         ))}
       </View>
@@ -1475,24 +1570,45 @@ const styles = StyleSheet.create({
   chipText: { fontSize: 12, fontWeight: "600", letterSpacing: 0.3 },
 
   // Projects
-  projectHeader: { flexDirection: "row", alignItems: "center", marginBottom: 12 },
+  projectHeader: { flexDirection: "row", alignItems: "center", marginBottom: 12, gap: 12 },
   projectIndex: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     borderWidth: 1,
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 12,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.7,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  projectTitle: { fontSize: 16, fontWeight: "800", letterSpacing: -0.2 },
+  projectTagline: { fontSize: 12, marginTop: 3, lineHeight: 17, fontWeight: "500" },
+  chipMore: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+  },
+  chipMoreText: { fontSize: 12, fontWeight: "700" },
+  viewProjectBtn: {
+    marginTop: 14,
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 20,
+    borderWidth: 1,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
     shadowRadius: 8,
     elevation: 4,
   },
-  projectIndexText: { color: "#fff", fontWeight: "800", fontSize: 12, letterSpacing: 1 },
-  projectTitle: { flex: 1, fontSize: 17, fontWeight: "700", letterSpacing: -0.2 },
-  projectDesc: { fontSize: 14, lineHeight: 21, marginBottom: 12 },
+  viewProjectText: { fontSize: 12, fontWeight: "700", letterSpacing: 0.4 },
 
   // Timeline
   timelineWrap: { paddingLeft: 8 },
@@ -1526,21 +1642,54 @@ const styles = StyleSheet.create({
 
   // Certifications
   certGrid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 140 },
-  certIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+  certCard: { width: (SCREEN_WIDTH - 40 - 12) / 2, minHeight: 220 },
+  certBrandRow: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 10 },
+  certBrandBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  certBrandBadgeText: { color: "#fff", fontSize: 10, fontWeight: "800", letterSpacing: 0.8 },
+  certProvider: { flex: 1, fontSize: 10, fontWeight: "700", letterSpacing: 0.6, textTransform: "uppercase" },
+  certImagePlaceholder: {
+    width: "100%",
+    height: 66,
     borderWidth: 1,
+    borderRadius: 12,
+    borderStyle: "dashed",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 10,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.7,
-    shadowRadius: 8,
-    elevation: 4,
   },
-  certText: { fontSize: 13, fontWeight: "600", lineHeight: 18 },
+  certImageWrap: {
+    width: "100%",
+    height: 66,
+    borderWidth: 1,
+    borderRadius: 12,
+    overflow: "hidden",
+    marginBottom: 10,
+  },
+  certImage: { width: "100%", height: "100%" },
+  certName: { fontSize: 12, fontWeight: "700", lineHeight: 17, flex: 1 },
+  certVerifyBtn: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    borderWidth: 1,
+    borderRadius: 16,
+    paddingVertical: 7,
+    paddingHorizontal: 10,
+  },
+  certVerifyText: { fontSize: 10, fontWeight: "700", letterSpacing: 0.4 },
 
   // Achievements
   achievementRow: { flexDirection: "row", alignItems: "flex-start", paddingVertical: 14 },

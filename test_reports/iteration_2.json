@@ -1,0 +1,38 @@
+{
+  "summary": "Full backend + frontend regression on the latest portfolio changes (new email muttanavya@gmail.com, new resume URL, Smart Door removed, 3 projects only, dedicated /project/[slug] detail routes, branded certifications gallery). Backend: 4/4 pytests passed against the real /api/chat (Claude Sonnet 4.5 via Emergent LLM key) — root health OK, chat reply correctly uses the new email, mentions exactly 3 projects, does NOT mention 'Smart Door', and the fraud-detection query returns a reply containing both 'XGBoost' and '99.95'. Frontend (Expo web, 390x844): home renders exactly 3 project preview cards with testIDs project-view-<slug>; no 'muttanavyna' typo and no 'Smart Door' anywhere in the DOM. Tapping project-view-credit-card-fraud-detection navigates to /project/credit-card-fraud-detection which shows Overview, Problem Statement, Solution, Technologies Used, Key Features, Outcome, Screenshots & Demo, Back to Projects, hero metrics (99.95%, 284,807 txns, XGBoost) and the disabled 'GitHub · Coming Soon' button (testID project-detail-github-placeholder). Direct navigation to /project/browser-history-simulator and /project/vehicle-accident-alert-system also renders correctly with their own case-study content (Java/Stack for one, Arduino/IoT for the other). project-detail-back-button correctly returns to /. Certifications section renders all 8 branded cards, and every 'cert-verify-*' button shows the locked 'Verify Soon' state (disabled) since no verifyUrl is set. Resume URL confirmed in code as https://customer-assets-rejwkqb3.emergentagent.net/job_navya-recruit/artifacts/y27ce0bz_p.resume.pdf and used by both Hero and RecruiterModal. No console errors and specifically no 'JS driven animation on animated node that has been moved to native earlier' error observed during load, scroll, and navigation. Only pre-existing benign RN-Web deprecation warnings (shadow* → boxShadow, props.pointerEvents → style.pointerEvents) remain from the prior iteration — non-blocking.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "react_native_issues": [
+      {"component": "shadow* style props", "issue": "Pre-existing RN Web deprecation warning across many styles (portraitOuter, primaryBtn, iconBtn, chip, projectIndex, viewProjectBtn, certBrandBadge, timelineDot, achievementIcon, contactIcon, fabInner, header sound toggle, scroll-progress-bar). Not introduced in this iteration. Reference: /app/frontend/app/index.tsx (many)."},
+      {"component": "props.pointerEvents", "issue": "Pre-existing RN Web deprecation on Particles/FloatingIcons/BackToTop (pointerEvents passed as prop instead of style). Reference: /app/frontend/app/index.tsx:72,170,1179."}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_portfolio_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Migrate shadow* styles to boxShadow and pointerEvents props to style.pointerEvents to silence RN Web deprecation warnings — cosmetic, no functional impact."
+  ],
+  "critical_code_review_comments": [
+    "server.py PORTFOLIO_CONTEXT correctly enumerates exactly 3 projects, uses muttanavya@gmail.com, and Smart Door is removed. LLM grounded and validated against these.",
+    "data.ts CONTACT.email, RESUME_URL, and PROJECTS[] all correct (3 entries with slugs matching /project/[slug] route).",
+    "app/project/[slug].tsx handles unknown slug (project-detail-back-fallback) and back navigation gracefully with router.canGoBack fallback to router.replace('/').",
+    "Chatbot.tsx fallback error message uses new email muttanavya@gmail.com (Chatbot.tsx:126)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_portfolio_api.py (expanded to 4 tests covering email/3-projects/no-Smart-Door + fraud project XGBoost 99.95%)"
+  ],
+  "success_rate": {"backend": "100% (4/4)", "frontend": "100%"},
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preview URL https://navya-recruit.preview.emergentagent.com. Pytest suite at /app/backend/tests/test_portfolio_api.py covers root health + 3 chat validations (email/projects, XGBoost fraud project, empty message 400). Project detail testIDs: project-detail-back-button, project-detail-github-placeholder, project-detail-github-button (when github set), project-detail-demo-button, project-detail-metric-<Label>, project-detail-tech-<Tech>, project-detail-scroll-<slug>, project-detail-back-cta. Home project card testIDs: project-card-<slug>, project-view-<slug>, project-tech-<i>-<Tech>. Cert testIDs: cert-card-<i>, cert-verify-<i>, cert-image-placeholder-<i>. Mobile viewport 390x844.",
+  "rca_of_issue": "N/A — no bugs found in this iteration. HeroPortrait animation-driver split (JS-driven shadowRadius on outer view, native-driven transform on inner view) is intact and confirmed crash-free again."
+}

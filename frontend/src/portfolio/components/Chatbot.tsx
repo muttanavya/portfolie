@@ -123,7 +123,7 @@ const ChatbotModal = ({ visible, onClose }: { visible: boolean; onClose: () => v
         ...prev,
         {
           role: "assistant",
-          text: `Sorry, I couldn't reach the assistant right now. Please try again or email Navya at muttanavyna@gmail.com.`,
+          text: `Sorry, I couldn't reach the assistant right now. Please try again or email Navya at muttanavya@gmail.com.`,
         },
       ]);
     } finally {
