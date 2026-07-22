@@ -184,93 +184,314 @@ export const INTERNSHIPS = [
 export type Certification = {
   name: string;
   provider: string;
-  brandColor: string; // background accent
-  brandTag: string; // short 1-3 char text badge (fallback for logo)
-  icon: string; // Ionicons name
-  issueDate?: string; // e.g. "Feb 2026"
-  duration?: string; // e.g. "12 Weeks"
-  credentialId?: string; // certificate id / verification code
-  verifyUrl?: string; // public credential URL, if any
-  imageUrl?: string; // uploaded cert image/pdf preview, if any
+
+  issueDate?: string;
+
+  description: string;
+
+  skills: string[];
+
+  credentialId?: string;
+
+  verifyUrl?: string;
+
+  pdfPath: any;
+
+  imageUrl?: any;
+
+  brandColor: string;
+  brandTag: string;
+  icon: string;
+
+  duration?: string;
 };
 
 export const CERTIFICATIONS: Certification[] = [
   {
     name: "AWS Data Engineering",
     provider: "Amazon Web Services",
+
+    issueDate: "2026",
+
+    description:
+      "Completed AWS Data Engineering certification covering cloud storage, ETL pipelines, analytics, data lakes, and AWS services for modern data engineering.",
+
+    skills: [
+      "AWS",
+      "S3",
+      "Glue",
+      "Redshift",
+      "Data Engineering",
+      "ETL",
+      "Cloud Computing",
+    ],
+
+    credentialId: "",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/aws-data-engineering.pdf"),
+
+    imageUrl: require("../assets/certificates/aws-data-engineering.jpg"),
+
     brandColor: "#FF9900",
     brandTag: "AWS",
     icon: "server",
+
+    duration: "",
   },
+
   {
     name: "Google Python Full Stack Developer",
     provider: "Google",
+
+    issueDate: "2026",
+
+    description:
+      "Completed Full Stack Development program using Python covering frontend, backend, APIs, databases, and deployment.",
+
+    skills: [
+      "Python",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Flask",
+      "SQL",
+      "Git",
+    ],
+
+    credentialId: "",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/python-full-stack.pdf"),
+
+    imageUrl: require("../assets/certificates/python-full-stack.jpg"),
+
     brandColor: "#4285F4",
-    brandTag: "G",
+    brandTag: "GOOGLE",
     icon: "logo-google",
+
+    duration: "",
   },
+
   {
     name: "Generative AI Fundamentals",
     provider: "Google Cloud",
+
+    issueDate: "2026",
+
+    description:
+      "Successfully completed Generative AI Fundamentals covering LLMs, Prompt Engineering, Responsible AI, Vertex AI, and Generative AI applications.",
+
+    skills: [
+      "Generative AI",
+      "Prompt Engineering",
+      "LLMs",
+      "Vertex AI",
+      "Google Cloud",
+      "Artificial Intelligence",
+    ],
+
+    credentialId: "1325af6071550dc7d6d0af8b2c7ae197",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/gen-ai.pdf"),
+
+    imageUrl: require("../assets/certificates/gen-ai.jpg"),
+
     brandColor: "#EA4335",
-    brandTag: "GEN",
+    brandTag: "GEN AI",
     icon: "sparkles",
+
+    duration: "",
   },
+
   {
     name: "Data Analytics Job Simulation",
-    provider: "Deloitte · Forage",
-    brandColor: "#86BC25",
-    brandTag: "DL",
-    icon: "briefcase",
+    provider: "Deloitte Australia · Forage",
+
     issueDate: "Nov 2025",
+
+    description:
+      "Completed Deloitte Data Analytics Job Simulation involving practical tasks in data analysis and forensic technology.",
+
+    skills: [
+      "Data Analytics",
+      "Excel",
+      "Forensic Technology",
+      "Business Analysis",
+      "Data Interpretation",
+    ],
+
     credentialId: "u7SLihrTCo8RWjExu",
+
+    verifyUrl:
+      "https://www.theforage.com/virtual-internships/prototype/FqL4Ajx9jK5QKXbL2",
+
+    pdfPath: require("../assets/certificates/deloitte-data-analytics.pdf"),
+
+    imageUrl: require("../assets/certificates/deloitte-data-analytics.jpg"),
+
+    brandColor: "#86BC25",
+    brandTag: "DELOITTE",
+    icon: "briefcase",
   },
+
   {
     name: "Data Visualisation: Empowering Business with Effective Insights",
-    provider: "Tata · Forage",
+    provider: "Tata Group · Forage",
+
+    issueDate: "Feb 2025",
+
+    description:
+      "Completed Tata Data Visualisation virtual experience covering business scenarios, dashboards, effective visuals, and communication of insights.",
+
+    skills: [
+      "Power BI",
+      "Business Intelligence",
+      "Data Visualization",
+      "Charts",
+      "Analytics",
+    ],
+
+    credentialId: "XTgEBtFyqWsdqgJvM",
+
+    verifyUrl:
+      "https://www.theforage.com/virtual-internships/prototype/cqQY5Jz6bYw",
+
+    pdfPath: require("../assets/certificates/data-visualization.pdf"),
+
+    imageUrl: require("../assets/certificates/data-visualization.jpg"),
+
     brandColor: "#486AFF",
     brandTag: "TATA",
     icon: "bar-chart",
-    issueDate: "Feb 2025",
-    credentialId: "XTgEBtFyqWsdqgJvM",
   },
+
   {
-    name: "The Joy of Computing using Python — NPTEL Elite",
-    provider: "NPTEL (IIT)",
-    brandColor: "#0EA5E9",
-    brandTag: "NPT",
-    icon: "trophy",
+    name: "The Joy of Computing using Python",
+    provider: "NPTEL",
+
     issueDate: "Oct 2025",
-    duration: "12 Weeks",
+
+    description:
+      "Successfully completed the NPTEL course 'The Joy of Computing using Python' with Elite certification.",
+
+    skills: [
+      "Python",
+      "Programming",
+      "Problem Solving",
+      "Algorithms",
+      "Computational Thinking",
+    ],
+
     credentialId: "NPTEL25CS103S972401856",
+
+    verifyUrl: "https://nptel.ac.in/noc",
+
+    pdfPath: require("../assets/certificates/nptel-python.pdf"),
+
+    imageUrl: require("../assets/certificates/nptel-python.jpg"),
+
+    brandColor: "#0EA5E9",
+    brandTag: "NPTEL",
+    icon: "trophy",
+
+    duration: "12 Weeks",
   },
+
   {
-    name: "Quantum Fundamentals (2025 – 2026)",
+    name: "Quantum Fundamentals",
     provider: "WISER · Qubitech",
-    brandColor: "#9B5DE5",
+
+    issueDate: "Feb 2026",
+
+    description:
+      "Successfully completed Quantum Fundamentals program introducing quantum computing concepts, qubits, quantum gates, and algorithms.",
+
+    skills: [
+      "Quantum Computing",
+      "Qubits",
+      "Quantum Gates",
+      "Quantum Algorithms",
+    ],
+
+    credentialId: "2D665BB0",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/quantum-computing.pdf"),
+
+    imageUrl: require("../assets/certificates/quantum-computing.jpg"),
+
+    brandColor: "#8B5CF6",
     brandTag: "QC",
     icon: "flash",
-    issueDate: "Feb 2026",
-    credentialId: "2D665BB0",
   },
+
   {
     name: "Business Analyst Virtual Internship",
     provider: "EduSkills · AICTE · Celonis",
+
+    issueDate: "Mar 2025",
+
+    description:
+      "Successfully completed Business Analyst Virtual Internship focusing on business process analysis, process mining, and enterprise analytics.",
+
+    skills: [
+      "Business Analysis",
+      "Celonis",
+      "Process Mining",
+      "Analytics",
+      "Business Intelligence",
+    ],
+
+    credentialId: "c315ecc7721033a163cc80d52c9ebc22",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/business-analyst.pdf"),
+
+    imageUrl: require("../assets/certificates/business-analyst.jpg"),
+
     brandColor: "#6C4CFF",
     brandTag: "BA",
     icon: "analytics",
-    issueDate: "Mar 2025",
-    credentialId: "c315ecc7721033a163cc80d52c9ebc22",
   },
+
   {
     name: "Ethical Hacking",
     provider: "EduSkills",
+
+    issueDate: "Dec 2025",
+
+    description:
+      "Successfully completed Ethical Hacking certification covering cybersecurity fundamentals, penetration testing, vulnerabilities, and security practices.",
+
+    skills: [
+      "Cyber Security",
+      "Ethical Hacking",
+      "Network Security",
+      "Penetration Testing",
+      "OWASP",
+    ],
+
+    credentialId: "377639",
+
+    verifyUrl: "",
+
+    pdfPath: require("../assets/certificates/ethical-hacking.pdf"),
+
+    imageUrl: require("../assets/certificates/ethical-hacking.jpg"),
+
     brandColor: "#EF4444",
-    brandTag: "ES",
+    brandTag: "ETHICAL",
     icon: "shield-checkmark",
   },
 ];
-
 export const ACHIEVEMENTS = [
   "Selected for the CRT Elite Batch at Dadi Institute of Engineering & Technology.",
   "Assisted 100+ individuals in registering for ABHA (Ayushman Bharat Health Account) cards.",
