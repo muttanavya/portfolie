@@ -184,25 +184,15 @@ export const INTERNSHIPS = [
 export type Certification = {
   name: string;
   provider: string;
-
   issueDate?: string;
-
   description: string;
-
   skills: string[];
-
   credentialId?: string;
-
   verifyUrl?: string;
-
   pdfPath: any;
-
-  imageUrl?: any;
-
   brandColor: string;
   brandTag: string;
   icon: string;
-
   duration?: string;
 };
 
@@ -210,12 +200,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     name: "AWS Data Engineering",
     provider: "Amazon Web Services",
-
     issueDate: "2026",
-
     description:
       "Completed AWS Data Engineering certification covering cloud storage, ETL pipelines, analytics, data lakes, and AWS services for modern data engineering.",
-
     skills: [
       "AWS",
       "S3",
@@ -225,31 +212,21 @@ export const CERTIFICATIONS: Certification[] = [
       "ETL",
       "Cloud Computing",
     ],
-
     credentialId: "",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/aws-data-engineering.pdf"),
-
-    imageUrl: require("../assets/certificates/aws-data-engineering.jpg"),
-
+    pdfPath: require("../../assets/certificates/aws-data-engineering.pdf"),
     brandColor: "#FF9900",
     brandTag: "AWS",
     icon: "server",
-
     duration: "",
   },
 
   {
     name: "Google Python Full Stack Developer",
     provider: "Google",
-
     issueDate: "2026",
-
     description:
       "Completed Full Stack Development program using Python covering frontend, backend, APIs, databases, and deployment.",
-
     skills: [
       "Python",
       "HTML",
@@ -260,31 +237,21 @@ export const CERTIFICATIONS: Certification[] = [
       "SQL",
       "Git",
     ],
-
     credentialId: "",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/python-full-stack.pdf"),
-
-    imageUrl: require("../assets/certificates/python-full-stack.jpg"),
-
+    pdfPath: require("../../assets/certificates/python-full-stack.pdf"),
     brandColor: "#4285F4",
     brandTag: "GOOGLE",
     icon: "logo-google",
-
     duration: "",
   },
 
   {
     name: "Generative AI Fundamentals",
     provider: "Google Cloud",
-
     issueDate: "2026",
-
     description:
       "Successfully completed Generative AI Fundamentals covering LLMs, Prompt Engineering, Responsible AI, Vertex AI, and Generative AI applications.",
-
     skills: [
       "Generative AI",
       "Prompt Engineering",
@@ -293,31 +260,21 @@ export const CERTIFICATIONS: Certification[] = [
       "Google Cloud",
       "Artificial Intelligence",
     ],
-
     credentialId: "1325af6071550dc7d6d0af8b2c7ae197",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/gen-ai.pdf"),
-
-    imageUrl: require("../assets/certificates/gen-ai.jpg"),
-
+    pdfPath: require("../../assets/certificates/gen-ai.pdf"),
     brandColor: "#EA4335",
     brandTag: "GEN AI",
     icon: "sparkles",
-
     duration: "",
   },
 
   {
     name: "Data Analytics Job Simulation",
     provider: "Deloitte Australia · Forage",
-
     issueDate: "Nov 2025",
-
     description:
       "Completed Deloitte Data Analytics Job Simulation involving practical tasks in data analysis and forensic technology.",
-
     skills: [
       "Data Analytics",
       "Excel",
@@ -325,16 +282,10 @@ export const CERTIFICATIONS: Certification[] = [
       "Business Analysis",
       "Data Interpretation",
     ],
-
     credentialId: "u7SLihrTCo8RWjExu",
-
     verifyUrl:
       "https://www.theforage.com/virtual-internships/prototype/FqL4Ajx9jK5QKXbL2",
-
-    pdfPath: require("../assets/certificates/deloitte-data-analytics.pdf"),
-
-    imageUrl: require("../assets/certificates/deloitte-data-analytics.jpg"),
-
+    pdfPath: require("../../assets/certificates/deloitte-data-analytics.pdf"),
     brandColor: "#86BC25",
     brandTag: "DELOITTE",
     icon: "briefcase",
@@ -343,12 +294,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     name: "Data Visualisation: Empowering Business with Effective Insights",
     provider: "Tata Group · Forage",
-
     issueDate: "Feb 2025",
-
     description:
       "Completed Tata Data Visualisation virtual experience covering business scenarios, dashboards, effective visuals, and communication of insights.",
-
     skills: [
       "Power BI",
       "Business Intelligence",
@@ -356,16 +304,10 @@ export const CERTIFICATIONS: Certification[] = [
       "Charts",
       "Analytics",
     ],
-
     credentialId: "XTgEBtFyqWsdqgJvM",
-
     verifyUrl:
       "https://www.theforage.com/virtual-internships/prototype/cqQY5Jz6bYw",
-
-    pdfPath: require("../assets/certificates/data-visualization.pdf"),
-
-    imageUrl: require("../assets/certificates/data-visualization.jpg"),
-
+    pdfPath: require("../../assets/certificates/data-visualization.pdf"),
     brandColor: "#486AFF",
     brandTag: "TATA",
     icon: "bar-chart",
@@ -374,12 +316,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     name: "The Joy of Computing using Python",
     provider: "NPTEL",
-
     issueDate: "Oct 2025",
-
     description:
       "Successfully completed the NPTEL course 'The Joy of Computing using Python' with Elite certification.",
-
     skills: [
       "Python",
       "Programming",
@@ -387,46 +326,30 @@ export const CERTIFICATIONS: Certification[] = [
       "Algorithms",
       "Computational Thinking",
     ],
-
     credentialId: "NPTEL25CS103S972401856",
-
     verifyUrl: "https://nptel.ac.in/noc",
-
-    pdfPath: require("../assets/certificates/nptel-python.pdf"),
-
-    imageUrl: require("../assets/certificates/nptel-python.jpg"),
-
+    pdfPath: require("../../assets/certificates/nptel-python.pdf"),
     brandColor: "#0EA5E9",
     brandTag: "NPTEL",
     icon: "trophy",
-
     duration: "12 Weeks",
   },
 
   {
     name: "Quantum Fundamentals",
     provider: "WISER · Qubitech",
-
     issueDate: "Feb 2026",
-
     description:
       "Successfully completed Quantum Fundamentals program introducing quantum computing concepts, qubits, quantum gates, and algorithms.",
-
     skills: [
       "Quantum Computing",
       "Qubits",
       "Quantum Gates",
       "Quantum Algorithms",
     ],
-
     credentialId: "2D665BB0",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/quantum-computing.pdf"),
-
-    imageUrl: require("../assets/certificates/quantum-computing.jpg"),
-
+    pdfPath: require("../../assets/certificates/quantum-computing.pdf"),
     brandColor: "#8B5CF6",
     brandTag: "QC",
     icon: "flash",
@@ -435,12 +358,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     name: "Business Analyst Virtual Internship",
     provider: "EduSkills · AICTE · Celonis",
-
     issueDate: "Mar 2025",
-
     description:
-      "Successfully completed Business Analyst Virtual Internship focusing on business process analysis, process mining, and enterprise analytics.",
-
+      "Completed Business Analyst Virtual Internship focusing on business process analysis, process mining, and enterprise analytics.",
     skills: [
       "Business Analysis",
       "Celonis",
@@ -448,15 +368,9 @@ export const CERTIFICATIONS: Certification[] = [
       "Analytics",
       "Business Intelligence",
     ],
-
     credentialId: "c315ecc7721033a163cc80d52c9ebc22",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/business-analyst.pdf"),
-
-    imageUrl: require("../assets/certificates/business-analyst.jpg"),
-
+    pdfPath: require("../../assets/certificates/business-analyst.pdf"),
     brandColor: "#6C4CFF",
     brandTag: "BA",
     icon: "analytics",
@@ -465,12 +379,9 @@ export const CERTIFICATIONS: Certification[] = [
   {
     name: "Ethical Hacking",
     provider: "EduSkills",
-
     issueDate: "Dec 2025",
-
     description:
-      "Successfully completed Ethical Hacking certification covering cybersecurity fundamentals, penetration testing, vulnerabilities, and security practices.",
-
+      "Completed Ethical Hacking certification covering cybersecurity fundamentals, penetration testing, vulnerabilities, and security practices.",
     skills: [
       "Cyber Security",
       "Ethical Hacking",
@@ -478,19 +389,41 @@ export const CERTIFICATIONS: Certification[] = [
       "Penetration Testing",
       "OWASP",
     ],
-
     credentialId: "377639",
-
     verifyUrl: "",
-
-    pdfPath: require("../assets/certificates/ethical-hacking.pdf"),
-
-    imageUrl: require("../assets/certificates/ethical-hacking.jpg"),
-
+    pdfPath: require("../../assets/certificates/ethical-hacking.pdf"),
     brandColor: "#EF4444",
     brandTag: "ETHICAL",
     icon: "shield-checkmark",
   },
+  {
+  name: "Design Thinking",
+  provider: "Wingspan",
+
+  issueDate: "Feb 2025",
+
+  description:
+    "Successfully completed the Design Thinking course, gaining practical knowledge of human-centered design, innovation, problem-solving, ideation, prototyping, and user experience methodologies.",
+
+  skills: [
+    "Design Thinking",
+    "Problem Solving",
+    "Innovation",
+    "User Experience",
+    "Ideation",
+    "Prototyping",
+    "Critical Thinking",
+  ],
+
+  credentialId: "",
+
+  verifyUrl: "https://verify.onwingspan.com",
+
+  pdfPath: require("../../assets/certificates/design-thinking.pdf"),
+  brandColor: "#0F766E",
+  brandTag: "DT",
+  icon: "bulb",
+},
 ];
 export const ACHIEVEMENTS = [
   "Selected for the CRT Elite Batch at Dadi Institute of Engineering & Technology.",

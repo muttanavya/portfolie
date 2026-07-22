@@ -990,20 +990,24 @@ const InternshipsSection = () => {
 const CertCard = ({ c, index }: { c: any; index: number }) => {
   const { colors } = useTheme();
 
-  const openImage = () => {
-    if (!c.imageUrl) return;
+  const openCertificate = () => {
+    if (!c.pdfPath) return;
+
     playSound("open");
-    WebBrowser.openBrowserAsync(c.imageUrl);
+    WebBrowser.openBrowserAsync(c.pdfPath);
   };
+
   const openVerify = () => {
     if (!c.verifyUrl) return;
+
     playSound("click");
     Linking.openURL(c.verifyUrl);
   };
 
   return (
     <GlassCard style={styles.certCard} testID={`cert-card-${index}`}>
-      {/* Brand header — logo tile + gradient wash of brand color */}
+      
+      {/* Brand Header */}
       <View style={styles.certHeader}>
         <LinearGradient
           colors={[c.brandColor + "55", "transparent"]}
@@ -1011,28 +1015,26 @@ const CertCard = ({ c, index }: { c: any; index: number }) => {
           end={{ x: 1, y: 1 }}
           style={StyleSheet.absoluteFill}
         />
-        {c.imageUrl ? (
-          <Image
-            source={{ uri: c.imageUrl }}
-            style={styles.certHeaderImage}
-            resizeMode="cover"
-            testID={`cert-image-${index}`}
-          />
-        ) : (
-          <View
-            style={[
-              styles.certLogoTile,
-              { backgroundColor: c.brandColor, shadowColor: c.brandColor },
-            ]}
-            testID={`cert-logo-${index}`}
-          >
-            <Ionicons name={c.icon as any} size={22} color="#fff" />
-            <Text style={styles.certLogoTag}>{c.brandTag}</Text>
-          </View>
-        )}
+
+        <View
+          style={[
+            styles.certLogoTile,
+            {
+              backgroundColor: c.brandColor,
+              shadowColor: c.brandColor,
+            },
+          ]}
+          testID={`cert-logo-${index}`}
+        >
+          <Ionicons name={c.icon as any} size={22} color="#fff" />
+          <Text style={styles.certLogoTag}>
+            {c.brandTag}
+          </Text>
+        </View>
       </View>
 
-      {/* Provider (issuer) small caps */}
+
+      {/* Provider */}
       <Text
         style={[styles.certIssuer, { color: colors.textMuted }]}
         numberOfLines={1}
@@ -1041,7 +1043,8 @@ const CertCard = ({ c, index }: { c: any; index: number }) => {
         {c.provider}
       </Text>
 
-      {/* Title */}
+
+      {/* Certificate Name */}
       <Text
         style={[styles.certName, { color: colors.textMain }]}
         numberOfLines={2}
@@ -1050,91 +1053,164 @@ const CertCard = ({ c, index }: { c: any; index: number }) => {
         {c.name}
       </Text>
 
-      {/* Issue date + duration pills */}
+
+      {/* Date + Duration */}
       {c.issueDate || c.duration ? (
         <View style={styles.certDateRow}>
+
           {c.issueDate ? (
             <View
               style={[
                 styles.certDatePill,
-                { borderColor: colors.border, backgroundColor: colors.surface },
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.surface,
+                },
               ]}
-              testID={`cert-date-${index}`}
             >
-              <Ionicons name="calendar" size={11} color={colors.textMuted} />
-              <Text style={[styles.certDateText, { color: colors.textMuted }]}>
+              <Ionicons
+                name="calendar"
+                size={11}
+                color={colors.textMuted}
+              />
+
+              <Text
+                style={[
+                  styles.certDateText,
+                  { color: colors.textMuted },
+                ]}
+              >
                 {c.issueDate}
               </Text>
             </View>
           ) : null}
+
+
           {c.duration ? (
             <View
               style={[
                 styles.certDatePill,
-                { borderColor: colors.border, backgroundColor: colors.surface },
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.surface,
+                },
               ]}
-              testID={`cert-duration-${index}`}
             >
-              <Ionicons name="time" size={11} color={colors.textMuted} />
-              <Text style={[styles.certDateText, { color: colors.textMuted }]}>
+              <Ionicons
+                name="time"
+                size={11}
+                color={colors.textMuted}
+              />
+
+              <Text
+                style={[
+                  styles.certDateText,
+                  { color: colors.textMuted },
+                ]}
+              >
                 {c.duration}
               </Text>
             </View>
           ) : null}
+
         </View>
       ) : null}
+
+
 
       {/* Credential ID */}
       {c.credentialId ? (
         <View
           style={[
             styles.certIdRow,
-            { borderColor: colors.border, backgroundColor: colors.surface },
+            {
+              borderColor: colors.border,
+              backgroundColor: colors.surface,
+            },
           ]}
-          testID={`cert-credential-${index}`}
         >
-          <Ionicons name="finger-print" size={11} color={c.brandColor} />
+          <Ionicons
+            name="finger-print"
+            size={11}
+            color={c.brandColor}
+          />
+
           <Text
-            style={[styles.certIdText, { color: colors.textMain }]}
+            style={[
+              styles.certIdText,
+              { color: colors.textMain },
+            ]}
             numberOfLines={1}
             ellipsizeMode="middle"
           >
             {c.credentialId}
           </Text>
+
         </View>
       ) : null}
 
-      {/* Actions */}
+
+
+      {/* Buttons */}
       <View style={styles.certActions}>
+
+        {/* View Certificate PDF */}
         <TouchableOpacity
           testID={`cert-view-${index}`}
           activeOpacity={0.85}
-          disabled={!c.imageUrl}
-          onPress={openImage}
+          disabled={!c.pdfPath}
+          onPress={openCertificate}
           style={[
             styles.certActionBtn,
             {
-              borderColor: c.imageUrl ? c.brandColor : colors.border,
-              opacity: c.imageUrl ? 1 : 0.55,
-              backgroundColor: c.imageUrl ? c.brandColor + "18" : "transparent",
+              borderColor: c.pdfPath
+                ? c.brandColor
+                : colors.border,
+
+              opacity: c.pdfPath ? 1 : 0.55,
+
+              backgroundColor: c.pdfPath
+                ? c.brandColor + "18"
+                : "transparent",
             },
           ]}
         >
+
           <Ionicons
-            name={c.imageUrl ? "eye" : "eye-off"}
+            name={
+              c.pdfPath
+                ? "document-text"
+                : "document-text-outline"
+            }
             size={12}
-            color={c.imageUrl ? c.brandColor : colors.textMuted}
+            color={
+              c.pdfPath
+                ? c.brandColor
+                : colors.textMuted
+            }
           />
+
+
           <Text
             style={[
               styles.certActionText,
-              { color: c.imageUrl ? colors.textMain : colors.textMuted },
+              {
+                color: c.pdfPath
+                  ? colors.textMain
+                  : colors.textMuted,
+              },
             ]}
           >
-            {c.imageUrl ? "View Certificate" : "Awaiting Upload"}
+            {c.pdfPath
+              ? "View Certificate"
+              : "No Certificate"}
           </Text>
+
         </TouchableOpacity>
 
+
+
+        {/* Verify Button */}
         <TouchableOpacity
           testID={`cert-verify-${index}`}
           activeOpacity={0.85}
@@ -1143,30 +1219,52 @@ const CertCard = ({ c, index }: { c: any; index: number }) => {
           style={[
             styles.certActionBtn,
             {
-              borderColor: c.verifyUrl ? c.brandColor : colors.border,
+              borderColor: c.verifyUrl
+                ? c.brandColor
+                : colors.border,
+
               opacity: c.verifyUrl ? 1 : 0.55,
             },
           ]}
         >
+
           <Ionicons
-            name={c.verifyUrl ? "shield-checkmark" : "lock-closed"}
+            name={
+              c.verifyUrl
+                ? "shield-checkmark"
+                : "lock-closed"
+            }
             size={12}
-            color={c.verifyUrl ? c.brandColor : colors.textMuted}
+            color={
+              c.verifyUrl
+                ? c.brandColor
+                : colors.textMuted
+            }
           />
+
+
           <Text
             style={[
               styles.certActionText,
-              { color: c.verifyUrl ? colors.textMain : colors.textMuted },
+              {
+                color: c.verifyUrl
+                  ? colors.textMain
+                  : colors.textMuted,
+              },
             ]}
           >
-            {c.verifyUrl ? "Verify Credential" : "Verify Soon"}
+            {c.verifyUrl
+              ? "Verify Credential"
+              : "Verify Soon"}
           </Text>
+
         </TouchableOpacity>
+
       </View>
+
     </GlassCard>
   );
 };
-
 const CertificationsSection = () => {
   return (
     <View style={styles.section} testID="certifications-section">
