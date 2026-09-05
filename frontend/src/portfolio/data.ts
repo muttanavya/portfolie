@@ -10,7 +10,7 @@ export const CONTACT = {
   email: "muttanavya@gmail.com",
   phone: "+91 6302864849",
   github: "https://github.com/muttanavya",
-  linkedin: "https://www.linkedin.com/in/mutta-navya-139966266",
+  linkedin: "https://www.linkedin.com/in/mutta-navya-0399bb2b6",
 };
 
 export const ROLES = [
