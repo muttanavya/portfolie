@@ -1311,7 +1311,7 @@ const ContactSection = () => {
     { icon: "mail", label: CONTACT.email, action: () => Linking.openURL(`mailto:${CONTACT.email}`), testID: "footer-email" },
     { icon: "call", label: CONTACT.phone, action: () => Linking.openURL(`tel:${CONTACT.phone.replace(/\s/g, "")}`), testID: "footer-phone" },
     { icon: "logo-github", label: "github.com/muttanavya", action: () => Linking.openURL(CONTACT.github), testID: "footer-github" },
-    { icon: "logo-linkedin", label: "linkedin.com/in/muttanavya", action: () => Linking.openURL(CONTACT.linkedin), testID: "footer-linkedin" },
+    { icon: "logo-linkedin", label: "https://www.linkedin.com/in/mutta-navya-0399bb2b6", action: () => Linking.openURL(CONTACT.linkedin), testID: "footer-linkedin" },
   ] as const;
 
   return (
